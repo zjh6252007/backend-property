@@ -25,4 +25,16 @@ public class UserServiceImpl implements UserService {
         String encryptPassword = encryptUtil.encodePassword(password,salt);
         userMapper.add(username,encryptPassword,email,salt);
     }
+
+    @Override
+    public String getSalt(String username) {
+        return userMapper.getSalt(username);
+    }
+
+    @Override
+    public String getPassword(String username) {
+        return userMapper.getPassword(username);
+    }
+
+
 }

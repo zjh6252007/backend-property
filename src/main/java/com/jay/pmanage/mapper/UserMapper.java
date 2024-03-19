@@ -12,4 +12,10 @@ public interface UserMapper {
 
     @Insert("INSERT INTO user(username,password,email,salt) VALUES(#{username},#{password},#{email},#{salt})")
     void add(String username,String password,String email,String salt);
+
+    @Select("SELECT salt FROM user WHERE username=#{username}")
+    String getSalt(String username);
+
+    @Select("SELECT password FROM user WHERE username=#{username}")
+    String getPassword(String username);
 }
