@@ -9,4 +9,6 @@ public interface UserService {
 
     public String getSalt(String username);
     public String getPassword(String username);
+
+    public String generateJWT(Integer id, String username);
 }
