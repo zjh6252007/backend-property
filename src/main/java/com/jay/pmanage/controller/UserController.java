@@ -38,14 +38,15 @@ public class UserController {
     @PostMapping("/authorization")
     public Result<String> login(@RequestBody User user)
     {
-        if(userService.findUserByName(user.getUsername()) == null)
+        User foundUser = userService.findUserByName(user.getUsername());
+        if(foundUser == null)
         {
             return Result.error("Can't find username");
         }else{
             String salt = userService.getSalt(user.getUsername());
             String encrytPassword = encryptUtil.encodePassword(user.getPassword(),salt);
             if(encrytPassword.equals(userService.getPassword(user.getUsername()))){
-                return Result.success(userService.generateJWT(user.getId(),user.getUsername()));
+                return Result.success(userService.generateJWT(foundUser.getId(), user.getUsername()));
             }else{
                 return Result.error("Wrong Password");
             }
