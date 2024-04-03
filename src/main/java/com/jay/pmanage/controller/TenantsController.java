@@ -43,9 +43,9 @@ public class TenantsController {
     }
 
     @PutMapping("/modify/{id}")
-    public Result<Void> modify(@PathVariable Integer id,@RequestBody Tenants tenants)
+    public Result<Tenants> modify(@PathVariable Integer id,@RequestBody Tenants tenants)
     {
         tenantsService.modifyTenants(id,tenants);
-        return Result.success();
+        return Result.success(tenants);
     }
 }
