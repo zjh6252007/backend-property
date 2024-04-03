@@ -1,5 +1,6 @@
-package com.jay.pmanage.security;
+package com.jay.pmanage.config;
 
+import com.jay.pmanage.security.JwtInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

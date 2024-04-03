@@ -41,4 +41,11 @@ public class TenantsController {
         tenantsService.deleteTenants(id);
         return Result.success();
     }
+
+    @PutMapping("/modify/{id}")
+    public Result<Void> modify(@PathVariable Integer id,@RequestBody Tenants tenants)
+    {
+        tenantsService.modifyTenants(id,tenants);
+        return Result.success();
+    }
 }

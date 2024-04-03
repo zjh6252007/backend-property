@@ -5,7 +5,9 @@ import com.jay.pmanage.pojo.Tenants;
 import java.util.List;
 
 public interface TenantsService {
-    public List<Tenants> findAllTenants(Integer userid);
-    public void addTenants(Tenants tenants);
-    public void deleteTenants(Integer tenantsId);
+    List<Tenants> findAllTenants(Integer userid);
+    void addTenants(Tenants tenants);
+    void deleteTenants(Integer tenantsId);
+
+    void modifyTenants(Integer tenantsId,Tenants tenants);
 }

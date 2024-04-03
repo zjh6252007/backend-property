@@ -16,4 +16,8 @@ public interface TenantsMapper {
 
     @Delete("DELETE FROM tenants WHERE id=#{tenantid}")
     void delete(Integer tenantid);
+
+    @Update("UPDATE tenants SET firstName=#{tenant.firstName}, lastName=#{tenant.lastName}, email=#{tenant.email}, " +
+            "phone=#{tenant.phone}, address=#{tenant.address} WHERE id=#{tenantid}")
+    void modify(@Param("tenantid") Integer tenantid, @Param("tenant") Tenants tenants);
 }

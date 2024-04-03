@@ -29,8 +29,16 @@ public class TenantsServiceImpl implements TenantsService {
         tenantsMapper.add(tenants);
     }
 
-    public void deleteTenants(Integer tenantsId)
+    @Override
+    public void deleteTenants(Integer tenantId)
     {
-        tenantsMapper.delete(tenantsId);
+        tenantsMapper.delete(tenantId);
     }
+
+    @Override
+    public void modifyTenants(Integer tenantId,Tenants tenants) {
+        tenantsMapper.modify(tenantId,tenants);
+    }
+
+
 }
