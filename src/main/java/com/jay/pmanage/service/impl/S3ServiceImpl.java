@@ -2,6 +2,7 @@ package com.jay.pmanage.service.impl;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.jay.pmanage.service.S3Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,13 @@ public class S3ServiceImpl implements S3Service {
     }
 
     @Override
-    public Boolean uploadFile(MultipartFile file) {
+    public Boolean uploadFile(String userId,MultipartFile file) {
+        String fileName = userId + "/" + file.getOriginalFilename();
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentLength(file.getSize());
+        metadata.setContentType(file.getContentType());
         try {
-            s3Client.putObject(bucketName, file.getOriginalFilename(), file.getInputStream(),metadata);
+            s3Client.putObject(new PutObjectRequest(bucketName, fileName, file.getInputStream(),metadata));
             return true;
         } catch (IOException e) {
             e.printStackTrace();
