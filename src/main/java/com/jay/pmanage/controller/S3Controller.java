@@ -1,17 +1,14 @@
 package com.jay.pmanage.controller;
 
+import com.amazonaws.services.s3.model.ListObjectsV2Request;
 import com.jay.pmanage.pojo.Result;
 import com.jay.pmanage.service.S3Service;
 import com.jay.pmanage.util.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -35,6 +32,19 @@ public class S3Controller {
             return Result.success();
         } else {
             return Result.error("Uploaded Failed");
+        }
+    }
+
+    @GetMapping("/list")
+    public Result<List<String>> getFileList(){
+        Map<String,Object> user = ThreadLocalUtil.get();
+        String userId = user.get("id").toString();
+
+        List<String> files = s3Service.getFileList(userId);
+        if(files != null){
+            return Result.success(files);
+        }else{
+            return Result.error("No Data");
         }
     }
 }

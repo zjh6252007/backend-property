@@ -1,4 +1,7 @@
 spring:
+  profiles:
+    active:
+      - prod
   servlet:
     multipart:
       enabled: true
@@ -14,7 +17,3 @@ spring:
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
-
-aws:
-  access-key: ${AWS_ACCESS_KEY:AKIAVRUVTHZ6JVDKJHHX}
-  secret-key: ${AWS_SECRET_KEY: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}

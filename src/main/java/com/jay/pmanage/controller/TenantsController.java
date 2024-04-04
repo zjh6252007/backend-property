@@ -4,7 +4,6 @@ import com.jay.pmanage.pojo.Result;
 import com.jay.pmanage.pojo.Tenants;
 import com.jay.pmanage.service.TenantsService;
 import com.jay.pmanage.util.ThreadLocalUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/tenant")
-@CrossOrigin(origins = "http://localhost:3000")
+
 public class TenantsController {
     private final TenantsService tenantsService;
     public TenantsController(TenantsService tenantsService){

@@ -1,15 +1,16 @@
 package com.jay.pmanage.service.impl;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.*;
 import com.jay.pmanage.service.S3Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class S3ServiceImpl implements S3Service {
     private final AmazonS3 s3Client;
@@ -25,6 +26,7 @@ public class S3ServiceImpl implements S3Service {
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentLength(file.getSize());
         metadata.setContentType(file.getContentType());
+        metadata.setSSEAlgorithm(ObjectMetadata.AES_256_SERVER_SIDE_ENCRYPTION);
         try {
             s3Client.putObject(new PutObjectRequest(bucketName, fileName, file.getInputStream(),metadata));
             return true;
@@ -32,5 +34,26 @@ public class S3ServiceImpl implements S3Service {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public List<String> getFileList(String userId) {
+        List<String> fileNames = new ArrayList<>();
+        String prefix = userId + "/";
+
+        ListObjectsV2Request req = new ListObjectsV2Request().withBucketName(bucketName).withPrefix(prefix);
+        ListObjectsV2Result result;
+
+        do{
+            result = s3Client.listObjectsV2(req);
+            for(S3ObjectSummary objectSummary : result.getObjectSummaries()){
+                String key = objectSummary.getKey();
+                String name = key.substring(key.indexOf('/') + 1);
+                String nameWithoutExtension = name.contains(".") ?name.substring(0, name.lastIndexOf('.')):name;
+                fileNames.add(nameWithoutExtension);
+            }
+            req.setContinuationToken(result.getContinuationToken());
+        }while(result.isTruncated());
+        return fileNames;
     }
 }

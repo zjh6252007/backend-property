@@ -2,19 +2,16 @@ package com.jay.pmanage.controller;
 
 import com.jay.pmanage.pojo.Result;
 import com.jay.pmanage.pojo.User;
-import com.jay.pmanage.util.JwtUtil;
 import com.jay.pmanage.util.ThreadLocalUtil;
 import com.jay.pmanage.util.encryptUtil;
-import com.jay.pmanage.pojo.UserRegistrationDto;
 import com.jay.pmanage.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin(origins = "http://localhost:3000")
+
 public class UserController {
 
 
