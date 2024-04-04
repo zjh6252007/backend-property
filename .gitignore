@@ -20,7 +20,6 @@ target/
 *.ipr
 
 ### NetBeans ###
-/src/main/resources/application-prod.yml
 /nbproject/private/
 /nbbuild/
 /dist/
