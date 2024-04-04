@@ -2,6 +2,9 @@ spring:
   servlet:
     multipart:
       enabled: true
+      max-file-size: 10MB
+      max-request-size: 15MB
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/rentmanager
@@ -12,3 +15,6 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
 
+aws:
+  access-key: ${AWS_ACCESS_KEY:AKIAVRUVTHZ6JVDKJHHX}
+  secret-key: ${AWS_SECRET_KEY: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}

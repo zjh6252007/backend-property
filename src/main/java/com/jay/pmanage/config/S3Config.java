@@ -1,4 +1,4 @@
-/*package com.jay.pmanage.config;
+package com.jay.pmanage.config;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
@@ -12,18 +12,17 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class S3Config {
-    @Value("${accessKey}")
+
+    @Value("${aws.access-key}")
     private String accessKey;
-
-    @Value("${secret}")
-    private String secret;
-
+    @Value("${aws.secret-key}")
+    private String secretKey;
     @Bean
     public AmazonS3 s3client(){
-        AWSCredentials awsCredentials = new BasicAWSCredentials(accessKey,secret);
+        AWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
         return AmazonS3ClientBuilder.standard()
-                .withRegion(Regions.US_EAST_2)
-                .withCredentials(new AWSStaticCredentialsProvider(awsCredentials)).build();
+                .withRegion(Regions.US_EAST_1)
+                .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
+                .build();
     }
 }
-*/

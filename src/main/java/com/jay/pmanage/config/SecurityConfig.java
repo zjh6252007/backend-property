@@ -10,10 +10,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-   /* @Bean
-    public JwtFilter jwtFilter(){
-        return new JwtFilter();
-    }*/
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http.csrf().disable();
