@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
@@ -46,5 +47,14 @@ public class S3Controller {
         }else{
             return Result.error("No Data");
         }
+    }
+
+    @GetMapping("/presigned-url/{fileName}")
+    public Result<URL> getURL(@PathVariable String fileName){
+        Map<String,Object> user = ThreadLocalUtil.get();
+        String userId = user.get("id").toString();
+        String fullPath = userId + "/" +fileName + ".pdf";
+        URL url = s3Service.generateURL(fullPath);
+        return Result.success(url);
     }
 }

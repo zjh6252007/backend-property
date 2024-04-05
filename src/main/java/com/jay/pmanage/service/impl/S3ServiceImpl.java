@@ -1,5 +1,6 @@
 package com.jay.pmanage.service.impl;
 
+import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import com.jay.pmanage.service.S3Service;
@@ -8,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -55,5 +58,19 @@ public class S3ServiceImpl implements S3Service {
             req.setContinuationToken(result.getContinuationToken());
         }while(result.isTruncated());
         return fileNames;
+    }
+
+    @Override
+    public URL generateURL(String filename) {
+        Date expireDate = new Date();
+        long expTimeMillis = expireDate.getTime();
+        expTimeMillis += 1000 * 30 * 60;
+        expireDate.setTime(expTimeMillis);
+
+        GeneratePresignedUrlRequest generatePresignedUrlRequest = new GeneratePresignedUrlRequest(bucketName,filename)
+                .withMethod(HttpMethod.GET)
+                .withExpiration(expireDate);
+
+        return s3Client.generatePresignedUrl(generatePresignedUrlRequest);
     }
 }
