@@ -10,6 +10,7 @@ public class Properties {
     private String address;
     private String state;
     private BigDecimal price;
-
+    private Integer ownerId;
+    private String propertyType;
 
 }
