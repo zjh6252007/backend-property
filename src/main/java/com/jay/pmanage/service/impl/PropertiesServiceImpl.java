@@ -6,6 +6,7 @@ import com.jay.pmanage.service.PropertiesService;
 import com.jay.pmanage.util.ThreadLocalUtil;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 @Service
 public class PropertiesServiceImpl implements PropertiesService {
@@ -13,6 +14,12 @@ public class PropertiesServiceImpl implements PropertiesService {
     PropertiesServiceImpl(PropertiesMapper propertiesMapper){
         this.propertiesMapper = propertiesMapper;
     }
+
+    @Override
+    public List<Properties> getAll(Integer id) {
+        return propertiesMapper.getAll(id);
+    }
+
     @Override
     public void addProperties(Properties properties) {
         Map<String,Object> propertyMap = ThreadLocalUtil.get();
