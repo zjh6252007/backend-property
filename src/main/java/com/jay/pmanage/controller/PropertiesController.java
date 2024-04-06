@@ -31,5 +31,4 @@ public class PropertiesController {
         propertiesService.addProperties(properties);
         return Result.success();
     }
-
 }

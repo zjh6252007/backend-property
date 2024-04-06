@@ -1,5 +1,6 @@
 package com.jay.pmanage.service.impl;
 
+import com.amazonaws.AmazonServiceException;
 import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
@@ -72,5 +73,16 @@ public class S3ServiceImpl implements S3Service {
                 .withExpiration(expireDate);
 
         return s3Client.generatePresignedUrl(generatePresignedUrlRequest);
+    }
+
+    @Override
+    public void deleteFile(String userId, String fileName) {
+       try{
+           String fileKey = userId + "/" + fileName;
+           DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(bucketName,fileKey);
+           s3Client.deleteObject(deleteObjectRequest);
+       }catch (AmazonServiceException e){
+           e.printStackTrace();
+       }
     }
 }

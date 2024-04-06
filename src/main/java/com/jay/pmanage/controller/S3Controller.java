@@ -1,6 +1,5 @@
 package com.jay.pmanage.controller;
 
-import com.amazonaws.services.s3.model.ListObjectsV2Request;
 import com.jay.pmanage.pojo.Result;
 import com.jay.pmanage.service.S3Service;
 import com.jay.pmanage.util.ThreadLocalUtil;
@@ -56,5 +55,15 @@ public class S3Controller {
         String fullPath = userId + "/" +fileName + ".pdf";
         URL url = s3Service.generateURL(fullPath);
         return Result.success(url);
+    }
+
+    @DeleteMapping("/delete/{fileName}")
+    public Result<Void> deleteFile(@PathVariable String fileName)
+    {
+        Map<String,Object> user = ThreadLocalUtil.get();
+        String userId = user.get("id").toString();
+        fileName = fileName + ".pdf";
+        s3Service.deleteFile(userId,fileName);
+        return Result.success();
     }
 }
