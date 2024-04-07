@@ -1,10 +1,7 @@
 package com.jay.pmanage.mapper;
 
 import com.jay.pmanage.pojo.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface UserMapper {
@@ -20,4 +17,7 @@ public interface UserMapper {
 
     @Select("SELECT password FROM user WHERE username=#{username}")
     String getPassword(String username);
+
+    @Update("UPDATE user SET password=#{password}, salt=#{salt} WHERE id=#{userid}")
+    void updatePassword(String password,Integer userid,String salt);
 }

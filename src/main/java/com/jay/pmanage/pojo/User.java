@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 public class User {
     private Integer id;
     private String username;
-    @JsonIgnore
     private String password;
     private String email;
     private String phone;

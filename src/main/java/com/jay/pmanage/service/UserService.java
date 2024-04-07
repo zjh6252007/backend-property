@@ -6,9 +6,10 @@ import com.jay.pmanage.pojo.User;
 public interface UserService {
     User findUserByName(String username);
     void register(User user);
-
+    Boolean login(String username, String password);
     String getSalt(String username);
     String getPassword(String username);
-
     String generateJWT(Integer id, String username);
+    Boolean changePassword(String currentPwd, String newPwd);
+
 }

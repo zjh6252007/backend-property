@@ -33,17 +33,17 @@ public class UserController {
     }
 
     @PostMapping("/authorization")
-    public Result<String> login(@RequestBody User user)
+    public Result<String> login(@RequestBody Map<String,String> params)
     {
-        User foundUser = userService.findUserByName(user.getUsername());
+        String username = params.get("username");
+        String password = params.get("password");
+        User foundUser = userService.findUserByName(username);
         if(foundUser == null)
         {
             return Result.error("Can't find username");
         }else{
-            String salt = userService.getSalt(user.getUsername());
-            String encrytPassword = encryptUtil.encodePassword(user.getPassword(),salt);
-            if(encrytPassword.equals(userService.getPassword(user.getUsername()))){
-                return Result.success(userService.generateJWT(foundUser.getId(), user.getUsername()));
+            if(userService.login(username,password)){
+                return Result.success(userService.generateJWT(foundUser.getId(), username));
             }else{
                 return Result.error("Wrong Password");
             }
@@ -57,5 +57,19 @@ public class UserController {
         String username = (String)map.get("username");
         User user = userService.findUserByName(username);
         return Result.success(user);
+    }
+
+    @PatchMapping("/changePwd")
+    public Result<Void> changePassword(@RequestBody Map<String,String> params)
+    {
+        String currentPassword = params.get("current_pwd");
+        String newPassword = params.get("new_pwd");
+
+        if(userService.changePassword(currentPassword,newPassword))
+        {
+            return Result.success();
+        }else{
+            return Result.error("Wrong Password");
+        }
     }
 }
