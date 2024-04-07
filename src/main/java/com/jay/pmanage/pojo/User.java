@@ -13,5 +13,9 @@ public class User {
     private String password;
     private String email;
     private String phone;
+    @JsonIgnore
+    private String salt;
+    private String firstName;
+    private String lastName;
     private LocalDateTime enrollDate;
 }

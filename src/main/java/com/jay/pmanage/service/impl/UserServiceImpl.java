@@ -28,10 +28,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void register(String username, String password, String email){
+    public void register(User user){
+        String password = user.getPassword();
         String salt = encryptUtil.generateSalt();
         String encryptPassword = encryptUtil.encodePassword(password,salt);
-        userMapper.add(username,encryptPassword,email,salt);
+        user.setPassword(encryptPassword);
+        user.setSalt(salt);
+        userMapper.add(user);
     }
 
     @Override

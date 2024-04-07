@@ -25,7 +25,7 @@ public class UserController {
 
         if(userService.findUserByName(user.getUsername()) == null)
         {
-            userService.register(user.getUsername(),user.getPassword(), user.getEmail());
+            userService.register(user);
             return Result.success();
         }else{
             return Result.error("Username Existed");
