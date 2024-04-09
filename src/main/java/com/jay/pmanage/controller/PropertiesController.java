@@ -26,9 +26,9 @@ public class PropertiesController {
         return Result.success(propertiesList);
     }
     @PostMapping("/add")
-    public Result<Void> addProperties(@RequestBody Properties properties)
+    public Result<Properties> addProperties(@RequestBody Properties properties)
     {
         propertiesService.addProperties(properties);
-        return Result.success();
+        return Result.success(properties);
     }
 }

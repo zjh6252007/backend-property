@@ -3,7 +3,6 @@ package com.jay.pmanage.controller;
 import com.jay.pmanage.pojo.Result;
 import com.jay.pmanage.pojo.User;
 import com.jay.pmanage.util.ThreadLocalUtil;
-import com.jay.pmanage.util.encryptUtil;
 import com.jay.pmanage.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,14 +55,17 @@ public class UserController {
         Map<String,Object> map = ThreadLocalUtil.get();
         String username = (String)map.get("username");
         User user = userService.findUserByName(username);
+        user.setPassword(null);
         return Result.success(user);
     }
 
     @PatchMapping("/changePwd")
     public Result<Void> changePassword(@RequestBody Map<String,String> params)
     {
+
         String currentPassword = params.get("current_pwd");
         String newPassword = params.get("new_pwd");
+
 
         if(userService.changePassword(currentPassword,newPassword))
         {
