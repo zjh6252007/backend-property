@@ -7,5 +7,5 @@ import java.util.List;
 public interface PropertiesService {
     List<Properties> getAll(Integer id);
     void addProperties(Properties properties);
-
+    void deleteProperties(Integer id);
 }

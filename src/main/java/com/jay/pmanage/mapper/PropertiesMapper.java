@@ -1,10 +1,7 @@
 package com.jay.pmanage.mapper;
 
 import com.jay.pmanage.pojo.Properties;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -14,4 +11,7 @@ public interface PropertiesMapper {
     List<Properties> getAll(Integer userid);
     @Insert("INSERT INTO properties(address,state,price,propertytype,ownerid) VALUES (#{address},#{state},#{price},#{propertyType},#{ownerId})")
     void add(Properties properties);
+
+    @Delete("DELETE FROM properties WHERE id=#{id}")
+    void delete(Integer id);
 }

@@ -27,4 +27,9 @@ public class PropertiesServiceImpl implements PropertiesService {
         properties.setOwnerId(userid);
         propertiesMapper.add(properties);
     }
+
+    @Override
+    public void deleteProperties(Integer id) {
+        propertiesMapper.delete(id);
+    }
 }

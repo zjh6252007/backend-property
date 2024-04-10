@@ -31,4 +31,11 @@ public class PropertiesController {
         propertiesService.addProperties(properties);
         return Result.success(properties);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public Result<Void> deleteProperties(@PathVariable Integer id)
+    {
+        propertiesService.deleteProperties(id);
+        return Result.success();
+    }
 }
