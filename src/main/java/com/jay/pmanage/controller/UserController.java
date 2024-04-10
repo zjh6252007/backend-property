@@ -4,9 +4,12 @@ import com.jay.pmanage.pojo.Result;
 import com.jay.pmanage.pojo.User;
 import com.jay.pmanage.util.ThreadLocalUtil;
 import com.jay.pmanage.service.UserService;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/user")
@@ -15,8 +18,11 @@ public class UserController {
 
 
     private final UserService userService;
-    public UserController(UserService userService){
+    private final StringRedisTemplate stringRedisTemplate;
+    public UserController(UserService userService,StringRedisTemplate stringRedisTemplate){
+
         this.userService = userService;
+        this.stringRedisTemplate = stringRedisTemplate;
     }
     @PostMapping("/register")
     public Result<Void> register(@RequestBody User user)
@@ -42,7 +48,12 @@ public class UserController {
             return Result.error("Can't find username");
         }else{
             if(userService.login(username,password)){
-                return Result.success(userService.generateJWT(foundUser.getId(), username));
+                String token = userService.generateJWT(foundUser.getId(), username); //generate JWT after login success
+                ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
+                valueOperations.set(token, token, 10, TimeUnit.DAYS); //set current JWT in redis
+                String jwtRedis = valueOperations.get(token);
+                System.out.println(jwtRedis);
+                return Result.success(token);
             }else{
                 return Result.error("Wrong Password");
             }
@@ -60,7 +71,7 @@ public class UserController {
     }
 
     @PatchMapping("/changePwd")
-    public Result<Void> changePassword(@RequestBody Map<String,String> params)
+    public Result<Void> changePassword(@RequestBody Map<String,String> params,@RequestHeader("Authorization") String token)
     {
 
         String currentPassword = params.get("current_pwd");
@@ -69,6 +80,7 @@ public class UserController {
 
         if(userService.changePassword(currentPassword,newPassword))
         {
+            stringRedisTemplate.delete(token);
             return Result.success();
         }else{
             return Result.error("Wrong Password");
