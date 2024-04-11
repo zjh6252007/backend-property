@@ -8,4 +8,5 @@ public interface PropertiesService {
     List<Properties> getAll(Integer id);
     void addProperties(Properties properties);
     void deleteProperties(Integer id);
+    void modifyProperties(Integer id, Properties properties);
 }

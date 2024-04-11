@@ -10,8 +10,13 @@ public interface PropertiesMapper {
     @Select("SELECT * FROM properties WHERE ownerid=#{userid}")
     List<Properties> getAll(Integer userid);
     @Insert("INSERT INTO properties(address,state,price,propertytype,ownerid) VALUES (#{address},#{state},#{price},#{propertyType},#{ownerId})")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
     void add(Properties properties);
 
     @Delete("DELETE FROM properties WHERE id=#{id}")
     void delete(Integer id);
+
+    @Update("UPDATE properties SET address=#{properties.address},state=#{properties.state},price=#{properties.price}," +
+            "propertytype=#{properties.propertyType} WHERE id=#{id}")
+    void modify(@Param("id") Integer id, @Param("properties")Properties properties);
 }

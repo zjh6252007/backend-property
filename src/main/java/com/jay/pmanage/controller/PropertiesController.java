@@ -38,4 +38,11 @@ public class PropertiesController {
         propertiesService.deleteProperties(id);
         return Result.success();
     }
+
+    @PutMapping("/modify/{id}")
+    public Result<Properties> modifyProperties(@PathVariable Integer id,@RequestBody Properties properties)
+    {
+        propertiesService.modifyProperties(id,properties);
+        return Result.success(properties);
+    }
 }

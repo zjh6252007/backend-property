@@ -32,4 +32,9 @@ public class PropertiesServiceImpl implements PropertiesService {
     public void deleteProperties(Integer id) {
         propertiesMapper.delete(id);
     }
+
+    @Override
+    public void modifyProperties(Integer id, Properties properties) {
+        propertiesMapper.modify(id,properties);
+    }
 }
