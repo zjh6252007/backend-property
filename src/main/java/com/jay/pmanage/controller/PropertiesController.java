@@ -25,6 +25,13 @@ public class PropertiesController {
         List<Properties> propertiesList = propertiesService.getAll(userid);
         return Result.success(propertiesList);
     }
+
+    @GetMapping("/{id}")
+    public Result<Properties> getPropertyInfo(@PathVariable Integer id){
+        Properties property = propertiesService.findPropertyById(id);
+        return Result.success(property);
+    }
+
     @PostMapping("/add")
     public Result<Properties> addProperties(@RequestBody Properties properties)
     {

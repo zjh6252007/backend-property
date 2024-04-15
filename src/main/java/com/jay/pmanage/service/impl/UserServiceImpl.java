@@ -47,16 +47,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String getSalt(String username) {
-        return userMapper.getSalt(username);
-    }
-
-    @Override
-    public String getPassword(String username) {
-        return userMapper.getPassword(username);
-    }
-
-    @Override
     public String generateJWT(Integer id, String username) {
         Map<String,Object> claims = new HashMap<>();
         claims.put("id",id);

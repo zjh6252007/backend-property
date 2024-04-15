@@ -9,4 +9,5 @@ public interface PropertiesService {
     void addProperties(Properties properties);
     void deleteProperties(Integer id);
     void modifyProperties(Integer id, Properties properties);
+    Properties findPropertyById(Integer id);
 }

@@ -13,10 +13,13 @@ public interface PropertiesMapper {
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void add(Properties properties);
 
+    @Select("SELECT * FROM properties WHERE id=#{id}")
+    Properties findPropertyById(Integer id);
+
     @Delete("DELETE FROM properties WHERE id=#{id}")
     void delete(Integer id);
 
-    @Update("UPDATE properties SET address=#{properties.address},state=#{properties.state},price=#{properties.price}," +
+    @Update("UPDATE properties SET state=#{properties.state},price=#{properties.price}," +
             "propertytype=#{properties.propertyType} WHERE id=#{id}")
     void modify(@Param("id") Integer id, @Param("properties")Properties properties);
 }

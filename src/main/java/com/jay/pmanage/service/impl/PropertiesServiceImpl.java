@@ -37,4 +37,9 @@ public class PropertiesServiceImpl implements PropertiesService {
     public void modifyProperties(Integer id, Properties properties) {
         propertiesMapper.modify(id,properties);
     }
+
+    @Override
+    public Properties findPropertyById(Integer id) {
+        return propertiesMapper.findPropertyById(id);
+    }
 }
