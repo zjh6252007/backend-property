@@ -19,7 +19,13 @@ public interface PropertiesMapper {
     @Delete("DELETE FROM properties WHERE id=#{id}")
     void delete(Integer id);
 
-    @Update("UPDATE properties SET state=#{properties.state},price=#{properties.price}," +
-            "propertytype=#{properties.propertyType} WHERE id=#{id}")
+    @Update("<script>" +
+            "UPDATE properties" +
+            "<set>" +
+            "<if test='properties.state != null'>state=#{properties.state},</if>" +
+            "<if test='properties.price != null'>price=#{properties.price},</if>" +
+            "</set>" +
+            "WHERE id=#{id}" +
+            "</script>")
     void modify(@Param("id") Integer id, @Param("properties")Properties properties);
 }

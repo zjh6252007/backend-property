@@ -29,7 +29,11 @@ public class PropertiesController {
     @GetMapping("/{id}")
     public Result<Properties> getPropertyInfo(@PathVariable Integer id){
         Properties property = propertiesService.findPropertyById(id);
+        if(property != null){
         return Result.success(property);
+        }else {
+            return Result.error("cant find property");
+        }
     }
 
     @PostMapping("/add")
@@ -50,6 +54,7 @@ public class PropertiesController {
     public Result<Properties> modifyProperties(@PathVariable Integer id,@RequestBody Properties properties)
     {
         propertiesService.modifyProperties(id,properties);
-        return Result.success(properties);
+        Properties properties1 = propertiesService.findPropertyById(id);
+        return Result.success(properties1);
     }
 }
