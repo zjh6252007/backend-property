@@ -1,6 +1,7 @@
 package com.jay.pmanage.controller;
 
 import com.jay.pmanage.pojo.RepairRequest;
+import com.jay.pmanage.pojo.RepairRequestDto;
 import com.jay.pmanage.pojo.Result;
 import com.jay.pmanage.service.RepairRequestService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,9 +17,16 @@ public class RepairRequestController {
         this.repairRequestService = repairRequestService;
     }
 
-    @PostMapping
-    public Result<RepairRequest> createRepairRequest(@RequestBody RepairRequest repairRequest){
-        repairRequestService.createRepairRequest(repairRequest);
+    @PostMapping("/create")
+    public Result<RepairRequest> createRepairRequest(@RequestBody RepairRequestDto repairRequestDto)
+    {
+        RepairRequest repairRequest = repairRequestService.createRepairRequest(
+                repairRequestDto.getPropertyId(),
+                repairRequestDto.getTenantId(),
+                repairRequestDto.getDescription(),
+                repairRequestDto.getStatus()
+        );
         return Result.success(repairRequest);
     }
 }
+

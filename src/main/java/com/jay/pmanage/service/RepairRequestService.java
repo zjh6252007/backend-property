@@ -3,5 +3,5 @@ package com.jay.pmanage.service;
 import com.jay.pmanage.pojo.RepairRequest;
 
 public interface RepairRequestService {
-    void createRepairRequest(RepairRequest repairRequest);
+    RepairRequest createRepairRequest(Integer propertyId,Integer tenantId,String description, String status );
 }
