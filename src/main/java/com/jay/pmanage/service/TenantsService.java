@@ -9,5 +9,6 @@ public interface TenantsService {
     void addTenants(Tenants tenants);
     void deleteTenants(Integer tenantsId);
 
+    Tenants getTenantById(Integer tenantId);
     void modifyTenants(Integer tenantsId,Tenants tenants);
 }

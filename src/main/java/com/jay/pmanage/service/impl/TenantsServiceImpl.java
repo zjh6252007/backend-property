@@ -36,6 +36,11 @@ public class TenantsServiceImpl implements TenantsService {
     }
 
     @Override
+    public Tenants getTenantById(Integer tenantId) {
+        return tenantsMapper.getTenantById(tenantId);
+    }
+
+    @Override
     public void modifyTenants(Integer tenantId,Tenants tenants) {
         tenantsMapper.modify(tenantId,tenants);
     }

@@ -34,6 +34,16 @@ public class TenantsController {
         return Result.success(tenantsList);
     }
 
+    @GetMapping("/getTenant/{id}")
+    public Result<Tenants> getTenantById(@PathVariable Integer id)
+    {
+        Tenants tenants = tenantsService.getTenantById(id);
+        if(tenants != null) {
+            return Result.success(tenants);
+        }else{
+            return Result.error("Can't find tenant");
+        }
+    }
     @DeleteMapping("/delete/{id}")
     public Result<Void> delete(@PathVariable Integer id)
     {

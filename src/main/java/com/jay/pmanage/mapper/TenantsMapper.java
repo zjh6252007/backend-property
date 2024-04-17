@@ -14,6 +14,8 @@ public interface TenantsMapper {
     @Select("SELECT * FROM tenants WHERE create_user=#{userid}")
     List<Tenants> findAll(Integer userid);
 
+    @Select("SELECT * FROM tenants WHERE id=#{tenantid}")
+    Tenants getTenantById(Integer tenantid);
     @Delete("DELETE FROM tenants WHERE id=#{tenantid}")
     void delete(Integer tenantid);
 
