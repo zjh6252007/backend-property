@@ -86,4 +86,14 @@ public class UserController {
             return Result.error("Wrong Password");
         }
     }
+
+    @GetMapping("/verify-email")
+    public Result<Void> verifyEmail(@RequestParam String token){
+        if(userService.verifyEmail(token)){
+            return Result.success();
+        }else{
+            return Result.error("Invalid or expired token.");
+        }
+    }
+
 }

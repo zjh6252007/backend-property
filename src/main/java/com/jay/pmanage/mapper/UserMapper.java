@@ -8,7 +8,7 @@ public interface UserMapper {
     @Select("SELECT * FROM user WHERE username=#{username}")
     User findUserByName(String username);
 
-    @Insert("INSERT INTO user(username,password,email,salt) VALUES(#{username},#{password},#{email},#{salt})")
+    @Insert("INSERT INTO user(username,password,email,salt,email_verification_token,email_verified) VALUES(#{username},#{password},#{email},#{salt},#{email_verification_token},#{email_verified})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void add(User user);
 
@@ -20,4 +20,10 @@ public interface UserMapper {
 
     @Update("UPDATE user SET password=#{password}, salt=#{salt} WHERE id=#{userid}")
     void updatePassword(String password,Integer userid,String salt);
+
+    @Select("SELECT * FROM user WHERE email_verification_token = #{token}")
+    User findByVerificationToken(String token);
+
+    @Update("UPDATE user SET email_verified =#{emailVerified} WHERE id =#{id}")
+    void updateEmailVerified(@Param("id")Integer id,@Param("emailVerified") boolean emailVerified);
 }

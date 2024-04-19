@@ -9,5 +9,5 @@ public interface UserService {
     Boolean login(String username, String password);
     String generateJWT(Integer id, String username);
     Boolean changePassword(String currentPwd, String newPwd);
-
+    Boolean verifyEmail(String token);
 }

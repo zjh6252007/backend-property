@@ -18,5 +18,5 @@ public class User {
     private String lastName;
     private LocalDateTime enrollDate;
     private String email_verification_token;
-    private String email_verified;
+    private boolean email_verified;
 }

@@ -2,6 +2,7 @@ package com.jay.pmanage.service.impl;
 
 import com.jay.pmanage.mapper.UserMapper;
 import com.jay.pmanage.pojo.User;
+import com.jay.pmanage.service.EmailService;
 import com.jay.pmanage.service.UserService;
 import com.jay.pmanage.util.JwtUtil;
 import com.jay.pmanage.util.ThreadLocalUtil;
@@ -11,15 +12,17 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
-
+    private final EmailService emailService;
     @Autowired
-    public UserServiceImpl(UserMapper userMapper){
+    public UserServiceImpl(UserMapper userMapper,EmailService emailService){
         this.userMapper = userMapper;
+        this.emailService = emailService;
     }
     @Override
     public User findUserByName(String username) {
@@ -33,9 +36,14 @@ public class UserServiceImpl implements UserService {
         String password = user.getPassword();
         String salt = encryptUtil.generateSalt();
         String encryptPassword = encryptUtil.encodePassword(password,salt);
+        String verify_token = UUID.randomUUID().toString();
+        user.setEmail_verification_token(verify_token);
+        user.setEmail_verified(false);
         user.setPassword(encryptPassword);
         user.setSalt(salt);
         userMapper.add(user);
+        String verificationUrl = "localhost:3000/user" + "/verify-email?token="+verify_token;
+        emailService.sendVerificationEmail(user.getEmail(), "Verify Your Email",verificationUrl);
     }
 
     @Override
@@ -69,6 +77,17 @@ public class UserServiceImpl implements UserService {
             userMapper.updatePassword(encryptNewPassword,user.getId(),newSalt);
             return true;
         }
+    }
+
+    @Override
+    public Boolean verifyEmail(String token) {
+        User user = userMapper.findByVerificationToken(token);
+        if(user!=null && !user.isEmail_verified() && user.getEmail_verification_token().equals(token)){
+            user.setEmail_verified(true);
+            userMapper.updateEmailVerified(user.getId(),true);
+            return true;
+        }
+        return false;
     }
 
 }
