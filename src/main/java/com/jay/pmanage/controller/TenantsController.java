@@ -34,7 +34,7 @@ public class TenantsController {
         return Result.success(tenantsList);
     }
 
-    @GetMapping("/getTenant/{id}")
+    @GetMapping("/{id}")
     public Result<Tenants> getTenantById(@PathVariable Integer id)
     {
         Tenants tenants = tenantsService.getTenantById(id);
