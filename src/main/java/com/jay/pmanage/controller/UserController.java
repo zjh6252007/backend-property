@@ -52,7 +52,6 @@ public class UserController {
                 ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
                 valueOperations.set(token, token, 10, TimeUnit.DAYS); //set current JWT in redis
                 String jwtRedis = valueOperations.get(token);
-                System.out.println(jwtRedis);
                 return Result.success(token);
             }else{
                 return Result.error("Wrong Password");
@@ -92,7 +91,7 @@ public class UserController {
         if(userService.verifyEmail(token)){
             return Result.success("Email verified success");
         }else{
-            return Result.error("Invalid or expired token.");
+            return Result.error("Email has already been verified.");
         }
     }
 }

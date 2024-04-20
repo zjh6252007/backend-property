@@ -37,8 +37,8 @@ public class UserServiceImpl implements UserService {
         String salt = encryptUtil.generateSalt();
         String encryptPassword = encryptUtil.encodePassword(password,salt);
         String verify_token = UUID.randomUUID().toString();
-        user.setEmail_verification_token(verify_token);
-        user.setEmail_verified(false);
+        user.setEmailVerificationToken(verify_token);
+        user.setEmailVerified(false);
         user.setPassword(encryptPassword);
         user.setSalt(salt);
         userMapper.add(user);
@@ -82,9 +82,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean verifyEmail(String token) {
         User user = userMapper.findByVerificationToken(token);
-        System.out.println(user);
-        if(user!=null && !user.isEmail_verified()){
-            user.setEmail_verified(true);
+        if(user!=null && !user.getEmailVerified()){
+            user.setEmailVerified(true);
             userMapper.updateEmailVerified(user.getId(),true);
             return true;
         }

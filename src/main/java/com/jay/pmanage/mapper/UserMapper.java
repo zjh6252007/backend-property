@@ -11,13 +11,6 @@ public interface UserMapper {
     @Insert("INSERT INTO user(username,password,email,salt,email_verification_token,email_verified) VALUES(#{username},#{password},#{email},#{salt},#{email_verification_token},#{email_verified})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void add(User user);
-
-    @Select("SELECT salt FROM user WHERE username=#{username}")
-    String getSalt(String username);
-
-    @Select("SELECT password FROM user WHERE username=#{username}")
-    String getPassword(String username);
-
     @Update("UPDATE user SET password=#{password}, salt=#{salt} WHERE id=#{userid}")
     void updatePassword(String password,Integer userid,String salt);
 
@@ -25,5 +18,5 @@ public interface UserMapper {
     User findByVerificationToken(String token);
 
     @Update("UPDATE user SET email_verified =#{emailVerified} WHERE id =#{id}")
-    void updateEmailVerified(@Param("id")Integer id,@Param("emailVerified") boolean emailVerified);
+    void updateEmailVerified(@Param("id")Integer id,@Param("emailVerified") Boolean emailVerified);
 }
