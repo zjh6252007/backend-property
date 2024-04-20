@@ -82,7 +82,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean verifyEmail(String token) {
         User user = userMapper.findByVerificationToken(token);
-        if(user!=null && !user.isEmail_verified() && user.getEmail_verification_token().equals(token)){
+        System.out.println(user);
+        if(user!=null && !user.isEmail_verified()){
             user.setEmail_verified(true);
             userMapper.updateEmailVerified(user.getId(),true);
             return true;

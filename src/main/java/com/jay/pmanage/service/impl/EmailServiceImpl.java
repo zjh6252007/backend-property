@@ -17,13 +17,8 @@ public class EmailServiceImpl implements EmailService {
     public void sendVerificationEmail(String to, String subject, String verificationUrl) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage,"utf-8");
-        String htmlMsg = "<!DOCTYPE html>"
-                + "<html><head>"
-                + "<title>Verify Email</title>"
-                + "</head><body>"
-                + "<h3>Please click the following link to verify your email address:</h3>"
-                + "<a href='" + verificationUrl + "' target='_blank'>Verify Email</a>"
-                + "</body></html>";
+        String htmlMsg = "<h3>Please click the following link to verify your email address:</h3>"
+                + "<a href='" + verificationUrl + "'>" + verificationUrl + "</a>";
 
         try{
             helper.setText(htmlMsg,true);

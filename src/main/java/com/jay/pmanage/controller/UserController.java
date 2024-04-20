@@ -88,12 +88,11 @@ public class UserController {
     }
 
     @GetMapping("/verify-email")
-    public Result<Void> verifyEmail(@RequestParam String token){
+    public Result<String> verifyEmail(@RequestParam String token){
         if(userService.verifyEmail(token)){
-            return Result.success();
+            return Result.success("Email verified success");
         }else{
             return Result.error("Invalid or expired token.");
         }
     }
-
 }
