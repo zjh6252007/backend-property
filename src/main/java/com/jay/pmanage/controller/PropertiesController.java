@@ -29,7 +29,9 @@ public class PropertiesController {
     @GetMapping("/{id}")
     public Result<Properties> getPropertyInfo(@PathVariable Integer id){
         Properties property = propertiesService.findPropertyById(id);
-        if(property != null){
+        Map<String,Object> propertiesMap = ThreadLocalUtil.get();
+        int ownerId = (Integer)propertiesMap.get("id");
+        if(property != null && ownerId == property.getOwnerId()){
         return Result.success(property);
         }else {
             return Result.error("cant find property");
