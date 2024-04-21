@@ -96,10 +96,10 @@ public class UserController {
     }
 
     @GetMapping("/resend-verification")
-    public Result<Void> resendVerifyEmail() {
+    public Result<String> resendVerifyEmail() {
         try {
             userService.resendVerificationEmail();
-            return Result.success();
+            return Result.success("Email sent success.");
         }catch (Exception e)
         {
             return Result.error(e.getMessage());

@@ -102,9 +102,9 @@ public class UserServiceImpl implements UserService {
         String username = userMap.get("username").toString();
         User user = userMapper.findUserByName(username);
         String email = user.getEmail();
-        String lastSent = ops.get("resendToken:"+email);
-        if(lastSent != null){
-            throw new Exception("Please wait for 60 seconds before resending the code");
+        Long expireSeconds = redisTemplate.getExpire("resendToken:" + email, TimeUnit.SECONDS);
+        if(expireSeconds != null && expireSeconds > 0){
+            throw new Exception("Please wait "+expireSeconds+ "seconds before resending the email");
         }
 
         String verify_token = user.getEmailVerificationToken();
