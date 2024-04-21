@@ -8,21 +8,26 @@ import com.jay.pmanage.util.JwtUtil;
 import com.jay.pmanage.util.ThreadLocalUtil;
 import com.jay.pmanage.util.encryptUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
     private final EmailService emailService;
+    private final StringRedisTemplate redisTemplate;
     @Autowired
-    public UserServiceImpl(UserMapper userMapper,EmailService emailService){
+    public UserServiceImpl(UserMapper userMapper,EmailService emailService, StringRedisTemplate redisTemplate){
         this.userMapper = userMapper;
         this.emailService = emailService;
+        this.redisTemplate = redisTemplate;
     }
     @Override
     public User findUserByName(String username) {
@@ -90,4 +95,21 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
+    @Override
+    public void resendVerificationEmail() throws Exception{
+        Map<String,Object> userMap = ThreadLocalUtil.get();
+        ValueOperations<String,String> ops = redisTemplate.opsForValue();
+        String username = userMap.get("username").toString();
+        User user = userMapper.findUserByName(username);
+        String email = user.getEmail();
+        String lastSent = ops.get("resendToken:"+email);
+        if(lastSent != null){
+            throw new Exception("Please wait for 60 seconds before resending the code");
+        }
+
+        String verify_token = user.getEmailVerificationToken();
+        String verificationUrl = "localhost:3000/user" + "/verify-email?token="+verify_token;
+        emailService.sendVerificationEmail(email,"Verify Your Email",verificationUrl);
+        ops.set("resendToken:"+email,"sent",1, TimeUnit.MINUTES);
+    }
 }

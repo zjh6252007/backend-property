@@ -50,7 +50,7 @@ public class UserController {
             if(userService.login(username,password)){
                 String token = userService.generateJWT(foundUser.getId(), username); //generate JWT after login success
                 ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
-                valueOperations.set(token, token, 10, TimeUnit.DAYS); //set current JWT in redis
+                valueOperations.set(token, token, 1, TimeUnit.DAYS); //set current JWT in redis
                 String jwtRedis = valueOperations.get(token);
                 return Result.success(token);
             }else{
@@ -92,6 +92,17 @@ public class UserController {
             return Result.success("Email verified success");
         }else{
             return Result.error("Email has already been verified.");
+        }
+    }
+
+    @GetMapping("/resend-verification")
+    public Result<Void> resendVerifyEmail() {
+        try {
+            userService.resendVerificationEmail();
+            return Result.success();
+        }catch (Exception e)
+        {
+            return Result.error(e.getMessage());
         }
     }
 }
