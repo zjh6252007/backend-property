@@ -105,4 +105,16 @@ public class UserController {
             return Result.error(e.getMessage());
         }
     }
+
+    @PostMapping("/send-invitation/{id}")
+    public Result<String> sendInvitation(@PathVariable Integer id)
+    {
+        try {
+            userService.sendInvitationEmail(id);
+            return Result.success("Email sent success.");
+        }catch (Exception e)
+        {
+            return Result.error(e.getMessage());
+        }
+    }
 }

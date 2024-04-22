@@ -47,6 +47,4 @@ public class RepairCostController {
         repairCostService.deleteRepairCost(id);
         return Result.success();
     }
-
-
 }

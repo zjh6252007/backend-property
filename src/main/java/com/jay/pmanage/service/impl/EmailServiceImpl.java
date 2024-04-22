@@ -36,4 +36,21 @@ public class EmailServiceImpl implements EmailService {
         }
     }
 
+    @Override
+    public void sendInviteEmail(String to, String subject, String link) {
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage,"utf-8");
+        String htmlMsg = "<h3>You have been invited to register an account for your rental.Please use the following link to complete your registration: </h3>"
+                + "<a href='" + link + "'>" + link + "</a>";
+        try{
+            helper.setText(htmlMsg,true);
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setFrom("jayemailservice@gmail.com");
+            javaMailSender.send(mimeMessage);
+        }catch(MessagingException e){
+            System.out.println("Error sending HTML email: " + e.getMessage());
+        }
+    }
+
 }

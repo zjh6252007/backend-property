@@ -11,4 +11,5 @@ public interface UserService {
     Boolean changePassword(String currentPwd, String newPwd);
     Boolean verifyEmail(String token);
     void resendVerificationEmail() throws Exception;
+    void sendInvitationEmail(Integer tenantsId) throws Exception;
 }

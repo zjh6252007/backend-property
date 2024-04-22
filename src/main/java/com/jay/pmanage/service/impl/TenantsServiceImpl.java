@@ -2,19 +2,24 @@ package com.jay.pmanage.service.impl;
 
 import com.jay.pmanage.mapper.TenantsMapper;
 import com.jay.pmanage.pojo.Tenants;
+import com.jay.pmanage.service.EmailService;
 import com.jay.pmanage.service.TenantsService;
 import com.jay.pmanage.util.ThreadLocalUtil;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class TenantsServiceImpl implements TenantsService {
     private final TenantsMapper tenantsMapper;
-    public TenantsServiceImpl(TenantsMapper tenantsMapper)
+    private final EmailService emailService;
+    public TenantsServiceImpl(TenantsMapper tenantsMapper ,EmailService emailService)
     {
         this.tenantsMapper = tenantsMapper;
+        this.emailService = emailService;
     }
     @Override
     public List<Tenants> findAllTenants(Integer userid) {
@@ -44,6 +49,5 @@ public class TenantsServiceImpl implements TenantsService {
     public void modifyTenants(Integer tenantId,Tenants tenants) {
         tenantsMapper.modify(tenantId,tenants);
     }
-
 
 }
