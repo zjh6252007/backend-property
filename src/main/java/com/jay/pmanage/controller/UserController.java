@@ -28,7 +28,7 @@ public class UserController {
     public Result<Void> register(@RequestBody User user)
     {
 
-        if(userService.findUserByName(user.getUsername()) == null)
+        if(userService.findUserByName(user.getUsername()) == null && userService.findTenantsAccount(user.getUsername()) == null)
         {
             userService.register(user);
             return Result.success();

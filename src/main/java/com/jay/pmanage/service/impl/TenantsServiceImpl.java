@@ -5,6 +5,7 @@ import com.jay.pmanage.pojo.Tenants;
 import com.jay.pmanage.service.EmailService;
 import com.jay.pmanage.service.TenantsService;
 import com.jay.pmanage.util.ThreadLocalUtil;
+import com.jay.pmanage.util.encryptUtil;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -50,4 +51,10 @@ public class TenantsServiceImpl implements TenantsService {
         tenantsMapper.modify(tenantId,tenants);
     }
 
+    @Override
+    public void register(String username, String password,String token) {
+        String salt = encryptUtil.generateSalt();
+        String encryptPassword = encryptUtil.encodePassword(password,salt);
+        tenantsMapper.register(username,encryptPassword,salt,true,token);
+    }
 }

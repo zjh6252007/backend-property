@@ -41,6 +41,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Tenants findTenantsAccount(String username) {
+        return userMapper.findTenantsAccount(username);
+    }
+
+    @Override
     public void register(User user){
         String password = user.getPassword();
         String salt = encryptUtil.generateSalt();
@@ -122,11 +127,14 @@ public class UserServiceImpl implements UserService {
         ValueOperations<String,String> ops = redisTemplate.opsForValue();
         Tenants tenants = tenantsMapper.getTenantById(tenantsId);
         String email = tenants.getEmail();
+        if(email == null){
+            throw new Exception("Please Input Email Address First");
+        }
         String address = tenants.getAddress();
         Long expireSeconds = redisTemplate.getExpire("invite:" + email, TimeUnit.SECONDS);
         if(expireSeconds != null && expireSeconds > 0)
         {
-            throw new Exception("Please wait "+expireSeconds+"seconds before sending the link");
+            throw new Exception("Please wait "+expireSeconds+" seconds before sending the link");
         }
         if(tenants.getInvitationToken() == null){
             String token = UUID.randomUUID().toString();
