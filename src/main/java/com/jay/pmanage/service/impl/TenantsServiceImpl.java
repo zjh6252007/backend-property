@@ -72,4 +72,9 @@ public class TenantsServiceImpl implements TenantsService {
         String encryptPassword = encryptUtil.encodePassword(password,salt);
         tenantsMapper.register(username,encryptPassword,salt,true,token);
     }
+
+    @Override
+    public List<Tenants> getTenantsByPropertyId(Integer propertyId) {
+        return tenantsMapper.getTenantsByPropertyId(propertyId);
+    }
 }

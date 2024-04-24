@@ -19,4 +19,5 @@ public class User {
     private LocalDateTime enrollDate;
     private String emailVerificationToken;
     private Boolean emailVerified;
+    private String roll;
 }

@@ -63,4 +63,10 @@ public class TenantsController {
     {
         return Result.success(tenantsService.modifyTenants(id,tenants));
     }
+
+    @GetMapping("/getTenant/{id}")
+    public Result<List<Tenants>> getTenantsByPropertyId(@PathVariable Integer id)
+    {
+        return Result.success(tenantsService.getTenantsByPropertyId(id));
+    }
 }

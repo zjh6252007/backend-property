@@ -38,4 +38,6 @@ public interface TenantsMapper {
     @Update("UPDATE tenants SET username=#{username},password=#{password},salt=#{salt},active=#{active} WHERE invitation_token=#{invitationToken}")
     void register(@Param("username")String username,@Param("password")String password,@Param("salt")String salt,@Param("active")boolean active,
                   @Param("invitationToken")String invitationToken);
+    @Select("SELECT * FROM tenants WHERE property_id=#{propertyId}")
+    List<Tenants> getTenantsByPropertyId(Integer propertyId);
 }
