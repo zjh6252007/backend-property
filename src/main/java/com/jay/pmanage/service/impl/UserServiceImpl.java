@@ -55,6 +55,7 @@ public class UserServiceImpl implements UserService {
         user.setEmailVerified(false);
         user.setPassword(encryptPassword);
         user.setSalt(salt);
+
         userMapper.add(user);
         String verificationUrl = "localhost:3000/user" + "/verify-email?token="+verify_token;
         emailService.sendVerificationEmail(user.getEmail(), "Verify Your Email",verificationUrl);
@@ -69,10 +70,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String generateJWT(Integer id, String username) {
+    public String generateJWT(Integer id, String username,String role) {
         Map<String,Object> claims = new HashMap<>();
         claims.put("id",id);
         claims.put("username",username);
+        claims.put("role",role);
         return JwtUtil.createJWT(claims);
     }
 

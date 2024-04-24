@@ -9,7 +9,7 @@ public interface UserService {
     Tenants findTenantsAccount(String username);
     void register(User user);
     Boolean login(String username, String password);
-    String generateJWT(Integer id, String username);
+    String generateJWT(Integer id, String username,String role);
     Boolean changePassword(String currentPwd, String newPwd);
     Boolean verifyEmail(String token);
     void resendVerificationEmail() throws Exception;

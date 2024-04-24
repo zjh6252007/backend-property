@@ -1,6 +1,7 @@
 package com.jay.pmanage.controller;
 
 import com.jay.pmanage.pojo.Result;
+import com.jay.pmanage.pojo.Tenants;
 import com.jay.pmanage.pojo.User;
 import com.jay.pmanage.util.ThreadLocalUtil;
 import com.jay.pmanage.service.UserService;
@@ -43,12 +44,13 @@ public class UserController {
         String username = params.get("username");
         String password = params.get("password");
         User foundUser = userService.findUserByName(username);
+
         if(foundUser == null)
         {
             return Result.error("Can't find username");
         }else{
             if(userService.login(username,password)){
-                String token = userService.generateJWT(foundUser.getId(), username); //generate JWT after login success
+                String token = userService.generateJWT(foundUser.getId(), username,"owner"); //generate JWT after login success
                 ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
                 valueOperations.set(token, token, 1, TimeUnit.DAYS); //set current JWT in redis
                 String jwtRedis = valueOperations.get(token);
