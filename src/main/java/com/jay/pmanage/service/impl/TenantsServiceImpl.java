@@ -1,6 +1,8 @@
 package com.jay.pmanage.service.impl;
 
+import com.jay.pmanage.mapper.PropertiesMapper;
 import com.jay.pmanage.mapper.TenantsMapper;
+import com.jay.pmanage.pojo.Properties;
 import com.jay.pmanage.pojo.Tenants;
 import com.jay.pmanage.service.EmailService;
 import com.jay.pmanage.service.TenantsService;
@@ -16,11 +18,12 @@ import java.util.UUID;
 @Service
 public class TenantsServiceImpl implements TenantsService {
     private final TenantsMapper tenantsMapper;
-    private final EmailService emailService;
-    public TenantsServiceImpl(TenantsMapper tenantsMapper ,EmailService emailService)
+    private final PropertiesMapper propertiesMapper;
+
+    public TenantsServiceImpl(TenantsMapper tenantsMapper ,PropertiesMapper propertiesMapper)
     {
         this.tenantsMapper = tenantsMapper;
-        this.emailService = emailService;
+        this.propertiesMapper = propertiesMapper;
     }
     @Override
     public List<Tenants> findAllTenants(Integer userid) {
@@ -32,6 +35,11 @@ public class TenantsServiceImpl implements TenantsService {
         Map<String,Object> tenantMap = ThreadLocalUtil.get();
         Integer userid = (Integer) tenantMap.get("id");
         tenants.setCreateUser(userid);
+        Properties properties = propertiesMapper.findPropertyByAddress(tenants.getAddress());
+        if(properties != null)
+        {
+            tenants.setPropertyId(properties.getId());
+        }
         tenantsMapper.add(tenants);
     }
 
@@ -48,6 +56,11 @@ public class TenantsServiceImpl implements TenantsService {
 
     @Override
     public Tenants modifyTenants(Integer tenantId,Tenants tenants) {
+        Properties properties = propertiesMapper.findPropertyByAddress(tenants.getAddress());
+        if(properties != null)
+        {
+            tenants.setPropertyId(properties.getId());
+        }
         tenantsMapper.modify(tenantId,tenants);
         return tenantsMapper.getTenantById(tenantId);
     }

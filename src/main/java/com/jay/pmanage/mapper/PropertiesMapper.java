@@ -16,6 +16,8 @@ public interface PropertiesMapper {
     @Select("SELECT * FROM properties WHERE id=#{id}")
     Properties findPropertyById(Integer id);
 
+    @Select("SELECT * FROM properties WHERE address=#{address}")
+    Properties findPropertyByAddress(String address);
     @Delete("DELETE FROM properties WHERE id=#{id}")
     void delete(Integer id);
 

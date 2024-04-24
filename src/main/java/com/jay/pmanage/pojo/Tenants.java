@@ -19,4 +19,5 @@ public class Tenants {
     private Integer createUser;
     private boolean active;
     private String invitationToken;
+    private Integer propertyId;
 }

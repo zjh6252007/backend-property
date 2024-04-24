@@ -27,7 +27,7 @@ public interface TenantsMapper {
     void delete(Integer tenantid);
 
     @Update("UPDATE tenants SET firstName=#{tenant.firstName}, lastName=#{tenant.lastName}, email=#{tenant.email}, " +
-            "phone=#{tenant.phone}, address=#{tenant.address} WHERE id=#{tenantid}")
+            "phone=#{tenant.phone}, address=#{tenant.address},property_id=#{tenant.propertyId} WHERE id=#{tenantid}")
     void modify(@Param("tenantid") Integer tenantid, @Param("tenant") Tenants tenants);
 
     @Update("UPDATE tenants SET invitation_token=#{invitationToken} WHERE id=#{tenantId}")
