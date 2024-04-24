@@ -1,6 +1,7 @@
 package com.jay.pmanage.controller;
 
 import com.jay.pmanage.pojo.Result;
+import com.jay.pmanage.pojo.TenantRegistrationDto;
 import com.jay.pmanage.pojo.Tenants;
 import com.jay.pmanage.service.TenantsService;
 import com.jay.pmanage.util.ThreadLocalUtil;
@@ -26,9 +27,9 @@ public class TenantsController {
     }
 
     @PostMapping("/register")
-    public Result<Void> register(@RequestParam String token,@RequestBody String username,String password)
+    public Result<Void> register(@RequestParam("invitation_token") String token, @RequestBody TenantRegistrationDto request)
     {
-        tenantsService.register(username,password,token);
+        tenantsService.register(request.getUsername(), request.getPassword(), token);
         return Result.success();
     }
     @GetMapping("/getAll")
@@ -60,7 +61,6 @@ public class TenantsController {
     @PutMapping("/modify/{id}")
     public Result<Tenants> modify(@PathVariable Integer id,@RequestBody Tenants tenants)
     {
-        tenantsService.modifyTenants(id,tenants);
-        return Result.success(tenants);
+        return Result.success(tenantsService.modifyTenants(id,tenants));
     }
 }

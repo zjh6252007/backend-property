@@ -9,6 +9,6 @@ public interface TenantsService {
     void addTenants(Tenants tenants);
     void deleteTenants(Integer tenantsId);
     Tenants getTenantById(Integer tenantId);
-    void modifyTenants(Integer tenantsId,Tenants tenants);
+    Tenants modifyTenants(Integer tenantsId,Tenants tenants);
     void register(String username,String password,String token);
 }

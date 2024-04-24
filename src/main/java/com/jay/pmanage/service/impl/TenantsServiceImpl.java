@@ -47,12 +47,14 @@ public class TenantsServiceImpl implements TenantsService {
     }
 
     @Override
-    public void modifyTenants(Integer tenantId,Tenants tenants) {
+    public Tenants modifyTenants(Integer tenantId,Tenants tenants) {
         tenantsMapper.modify(tenantId,tenants);
+        return tenantsMapper.getTenantById(tenantId);
     }
 
     @Override
     public void register(String username, String password,String token) {
+        System.out.println("running");
         String salt = encryptUtil.generateSalt();
         String encryptPassword = encryptUtil.encodePassword(password,salt);
         tenantsMapper.register(username,encryptPassword,salt,true,token);
