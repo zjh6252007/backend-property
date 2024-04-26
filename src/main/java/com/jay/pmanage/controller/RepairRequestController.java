@@ -46,9 +46,9 @@ public class RepairRequestController {
         }
     }
     @PutMapping("/updateStatus/{id}")
-    public Result<Void> updateStatus(@PathVariable Integer id, @RequestBody String status)
+    public Result<Void> updateStatus(@PathVariable Integer id, @RequestBody RepairRequestDto repairRequestDto)
     {
-        repairRequestService.updateStatus(status, id);
+        repairRequestService.updateStatus(repairRequestDto.getStatus(),id);
         return Result.success();
     }
 }
