@@ -67,6 +67,7 @@ public class UserServiceImpl implements UserService {
         if(tenant.isActive()){
             throw new Exception("Account has been registered");
         }
+        
         Integer id = tenant.getId();
         String salt = encryptUtil.generateSalt();
         String encryptPassword = encryptUtil.encodePassword(password,salt);

@@ -46,11 +46,15 @@ public class UserController {
     @PostMapping("/register_tenant")
     public Result<Void> register(@RequestParam("invitation_token") String token, @RequestBody TenantRegistrationDto request)
     {
-        try{userService.registerTenant(request.getUsername(), request.getPassword(), token);
-        return Result.success();
-        }catch (Exception e)
-        {
-            return Result.error(e.getMessage());
+        if(userService.findUserByName(request.getUsername()) == null) {
+            try {
+                userService.registerTenant(request.getUsername(), request.getPassword(), token);
+                return Result.success();
+            } catch (Exception e) {
+                return Result.error(e.getMessage());
+            }
+        }else{
+            return Result.error("Username Existed");
         }
     }
     @PostMapping("/authorization")
