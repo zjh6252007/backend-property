@@ -27,11 +27,11 @@ public class RepairRequestServiceImpl implements RepairRequestService {
         Map<String,Object> userMap = ThreadLocalUtil.get();
         Integer userId = (Integer) userMap.get("id");
         Integer tenantId = userMapper.getTenantId(userId);
-        Properties property = tenantsMapper.getPropertyById(tenantId);
+        Integer propertyId = tenantsMapper.getPropertyById(tenantId);
 
         RepairRequest repairRequest = new RepairRequest();
         repairRequest.setTenantId(tenantId);
-        repairRequest.setPropertyId(property.getId());
+        repairRequest.setPropertyId(propertyId);
         repairRequest.setDescription(description);
         repairRequest.setStatus("Open");
         repairRequest.setAvailable(available);

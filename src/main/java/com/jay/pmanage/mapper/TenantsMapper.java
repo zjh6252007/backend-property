@@ -45,6 +45,6 @@ public interface TenantsMapper {
     @Update("UPDATE tenants SET active=true WHERE id=#{id}")
     void activeTenants(Integer id);
 
-    @Select("SELECT * FROM tenants WHERE id=#{id}")
-    Properties getPropertyById(Integer id);
+    @Select("SELECT property_id FROM tenants WHERE id=#{id}")
+    Integer getPropertyById(Integer id);
 }
