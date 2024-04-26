@@ -11,9 +11,16 @@ public interface UserMapper {
 
     @Select("SELECT * FROM tenants WHERE username=#{username}")
     Tenants findTenantsAccount(String username);
-    @Insert("INSERT INTO user(username,password,email,salt,email_verification_token,email_verified) VALUES(#{username},#{password},#{email},#{salt},#{emailVerificationToken},#{emailVerified})")
+    @Insert("INSERT INTO user(username,password,email,salt,email_verification_token,email_verified,role) VALUES(#{username},#{password},#{email},#{salt},#{emailVerificationToken},#{emailVerified},#{role})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void add(User user);
+
+    @Insert("INSERT INTO user(username,password,salt,email_verified,role,email,phone,tenant_id) " +
+            "SELECT #{username},#{password},#{salt},#{emailVerified},#{role},t.email,t.phone,#{tenantId} " +
+            "FROM tenants t WHERE t.id = #{tenantId}")
+    void addTenantAccount(@Param("username")String username,@Param("password")String password,@Param("salt")String salt,
+                          @Param("invitationToken")String invitationToke,@Param("tenantId")Integer tenantId,@Param("emailVerified")
+                          Boolean emailVerified,@Param("role") String role);
     @Update("UPDATE user SET password=#{password}, salt=#{salt} WHERE id=#{userid}")
     void updatePassword(String password,Integer userid,String salt);
 

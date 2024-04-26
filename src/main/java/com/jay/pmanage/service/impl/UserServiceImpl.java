@@ -55,10 +55,23 @@ public class UserServiceImpl implements UserService {
         user.setEmailVerified(false);
         user.setPassword(encryptPassword);
         user.setSalt(salt);
-
+        user.setRole("owner");
         userMapper.add(user);
         String verificationUrl = "localhost:3000/user" + "/verify-email?token="+verify_token;
         emailService.sendVerificationEmail(user.getEmail(), "Verify Your Email",verificationUrl);
+    }
+
+    @Override
+    public void registerTenant(String username, String password,String token)throws Exception {
+        Tenants tenant= tenantsMapper.findByInvitationToken(token);
+        if(tenant.isActive()){
+            throw new Exception("Account has been registered");
+        }
+        Integer id = tenant.getId();
+        String salt = encryptUtil.generateSalt();
+        String encryptPassword = encryptUtil.encodePassword(password,salt);
+        userMapper.addTenantAccount(username,encryptPassword,salt,token,id,true,"tenant");
+        tenantsMapper.activeTenants(id);
     }
 
     @Override

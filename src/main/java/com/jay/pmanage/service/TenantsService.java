@@ -10,6 +10,7 @@ public interface TenantsService {
     void deleteTenants(Integer tenantsId);
     Tenants getTenantById(Integer tenantId);
     Tenants modifyTenants(Integer tenantsId,Tenants tenants);
-    void register(String username,String password,String token);
     List<Tenants> getTenantsByPropertyId(Integer propertyId);
+    Tenants findTenantByName(String tenantName);
+
 }

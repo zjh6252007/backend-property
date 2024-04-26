@@ -8,6 +8,7 @@ public interface UserService {
     User findUserByName(String username);
     Tenants findTenantsAccount(String username);
     void register(User user);
+    void registerTenant(String username,String password,String token) throws Exception;
     Boolean login(String username, String password);
     String generateJWT(Integer id, String username,String role);
     Boolean changePassword(String currentPwd, String newPwd);

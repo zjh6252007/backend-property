@@ -4,6 +4,7 @@ import com.jay.pmanage.mapper.PropertiesMapper;
 import com.jay.pmanage.mapper.TenantsMapper;
 import com.jay.pmanage.pojo.Properties;
 import com.jay.pmanage.pojo.Tenants;
+import com.jay.pmanage.pojo.User;
 import com.jay.pmanage.service.EmailService;
 import com.jay.pmanage.service.TenantsService;
 import com.jay.pmanage.util.ThreadLocalUtil;
@@ -66,15 +67,13 @@ public class TenantsServiceImpl implements TenantsService {
     }
 
     @Override
-    public void register(String username, String password,String token) {
-        System.out.println("running");
-        String salt = encryptUtil.generateSalt();
-        String encryptPassword = encryptUtil.encodePassword(password,salt);
-        tenantsMapper.register(username,encryptPassword,salt,true,token);
-    }
-
-    @Override
     public List<Tenants> getTenantsByPropertyId(Integer propertyId) {
         return tenantsMapper.getTenantsByPropertyId(propertyId);
     }
+
+    @Override
+    public Tenants findTenantByName(String tenantName) {
+        return tenantsMapper.findTenantByname(tenantName);
+    }
+
 }

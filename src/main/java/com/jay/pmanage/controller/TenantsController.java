@@ -26,12 +26,6 @@ public class TenantsController {
         return Result.success(tenants);
     }
 
-    @PostMapping("/register")
-    public Result<Void> register(@RequestParam("invitation_token") String token, @RequestBody TenantRegistrationDto request)
-    {
-        tenantsService.register(request.getUsername(), request.getPassword(), token);
-        return Result.success();
-    }
     @GetMapping("/getAll")
     public Result<List<Tenants>> getAll()
     {
