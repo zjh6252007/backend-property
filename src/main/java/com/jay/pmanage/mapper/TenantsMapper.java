@@ -1,5 +1,6 @@
 package com.jay.pmanage.mapper;
 
+import com.jay.pmanage.pojo.Properties;
 import com.jay.pmanage.pojo.Tenants;
 import com.jay.pmanage.pojo.User;
 import org.apache.ibatis.annotations.*;
@@ -44,6 +45,6 @@ public interface TenantsMapper {
     @Update("UPDATE tenants SET active=true WHERE id=#{id}")
     void activeTenants(Integer id);
 
-    @Select("SELECT property_id FROM tenants WHERE id=#{id}")
-    Integer getPropertyId(Integer id);
+    @Select("SELECT * FROM tenants WHERE id=#{id}")
+    Properties getPropertyById(Integer id);
 }

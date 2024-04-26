@@ -23,11 +23,12 @@ public class RepairRequestController {
                 repairRequestDto.getDescription(),
                 repairRequestDto.getAvailable()
         );
+
         return Result.success(repairRequest);
     }
 
     @GetMapping("/getAll")
-    public Result <List<RepairRequest>> getAllRepairRequest(){
+    public Result <List<RepairRequestDto>> getAllRepairRequest(){
         if(repairRequestService.getAll() != null){
             return Result.success(repairRequestService.getAll());
         }else{
