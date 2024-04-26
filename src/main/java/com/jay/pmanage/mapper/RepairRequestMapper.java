@@ -2,10 +2,7 @@ package com.jay.pmanage.mapper;
 
 import com.jay.pmanage.pojo.RepairRequest;
 import com.jay.pmanage.pojo.RepairRequestDto;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
@@ -27,4 +24,10 @@ public interface RepairRequestMapper {
             "JOIN tenants t ON rr.tenant_id = t.id " +
             "WHERE p.ownerid = #{userId}")
     List<RepairRequestDto> getAll(Integer userid);
+
+    @Select("SELECT * FROM repairrequests WHERE tenant_id = #{tenantId}")
+    List<RepairRequest> getRepirBytenantId(Integer tenantId);
+
+    @Update("UPDATE repairrequests SET status=#{status} WHERE id=#{id}")
+    void updateStatus(@Param("status")String status,@Param("id")Integer id);
 }

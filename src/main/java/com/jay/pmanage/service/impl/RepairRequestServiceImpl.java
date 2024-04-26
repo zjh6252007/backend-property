@@ -51,4 +51,17 @@ public class RepairRequestServiceImpl implements RepairRequestService {
         Integer userid = (Integer) userMap.get("id");
         return repairRequestMapper.getAll(userid);
     }
+
+    @Override
+    public List<RepairRequest> getRepairRequestByTenantId() {
+        Map<String,Object> userMap = ThreadLocalUtil.get();
+        Integer userId = (Integer) userMap.get("id");
+        Integer tenantId = userMapper.getTenantId(userId); //use the id of the account to get tenant id
+        return repairRequestMapper.getRepirBytenantId(tenantId);
+    }
+
+    @Override
+    public void updateStatus(String status, Integer id) {
+        repairRequestMapper.updateStatus(status,id);
+    }
 }

@@ -8,4 +8,6 @@ import java.util.List;
 public interface RepairRequestService {
     RepairRequest createRepairRequest(String description, String available );
     List<RepairRequestDto> getAll();
+    List<RepairRequest> getRepairRequestByTenantId();
+    void updateStatus(String status,Integer id);
 }

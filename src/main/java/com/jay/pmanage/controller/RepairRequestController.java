@@ -35,5 +35,21 @@ public class RepairRequestController {
             return Result.error("No such Data");
         }
     }
+
+    @GetMapping("/tenant/getAll")
+    public Result<List<RepairRequest>> getRepairRequestByTenantId(){
+        if(repairRequestService.getRepairRequestByTenantId() != null)
+        {
+            return Result.success(repairRequestService.getRepairRequestByTenantId());
+        }else{
+            return Result.error("No such Data");
+        }
+    }
+    @PutMapping("/updateStatus/{id}")
+    public Result<Void> updateStatus(@PathVariable Integer id, @RequestBody String status)
+    {
+        repairRequestService.updateStatus(status, id);
+        return Result.success();
+    }
 }
 
