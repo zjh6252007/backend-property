@@ -29,4 +29,7 @@ public interface UserMapper {
 
     @Update("UPDATE user SET email_verified =#{emailVerified} WHERE id =#{id}")
     void updateEmailVerified(@Param("id")Integer id,@Param("emailVerified") Boolean emailVerified);
+
+    @Select("SELECT tenant_id FROM user WHERE id=#{id}")
+    Integer getTenantId(Integer id);
 }

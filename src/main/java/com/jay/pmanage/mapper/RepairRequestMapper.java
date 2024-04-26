@@ -12,9 +12,9 @@ import java.util.List;
 
 @Mapper
 public interface RepairRequestMapper {
-    @Insert("INSERT INTO repairrequests (property_id, tenant_id, description, status, created_at, updated_at) " +
+    @Insert("INSERT INTO repairrequests (property_id, tenant_id, description, status, available, created_at, updated_at) " +
             "VALUES (#{propertyId}, #{tenantId}, #{description}, " +
-            "#{status}, #{createdAt}, #{updatedAt})")
+            "#{status},#{available}, #{createdAt}, #{updatedAt})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void create(RepairRequest repairRequest);
 

@@ -20,10 +20,8 @@ public class RepairRequestController {
     public Result<RepairRequest> createRepairRequest(@RequestBody RepairRequestDto repairRequestDto)
     {
         RepairRequest repairRequest = repairRequestService.createRepairRequest(
-                repairRequestDto.getPropertyId(),
-                repairRequestDto.getTenantId(),
                 repairRequestDto.getDescription(),
-                repairRequestDto.getStatus()
+                repairRequestDto.getAvailable()
         );
         return Result.success(repairRequest);
     }

@@ -10,6 +10,7 @@ public class RepairRequest {
     private int tenantId;
     private String description;
     private String status;
+    private String available;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
