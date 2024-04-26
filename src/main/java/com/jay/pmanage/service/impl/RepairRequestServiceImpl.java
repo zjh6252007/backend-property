@@ -4,6 +4,7 @@ import com.jay.pmanage.mapper.RepairRequestMapper;
 import com.jay.pmanage.mapper.TenantsMapper;
 import com.jay.pmanage.mapper.UserMapper;
 import com.jay.pmanage.pojo.*;
+import com.jay.pmanage.service.NotificationService;
 import com.jay.pmanage.service.RepairRequestService;
 import com.jay.pmanage.util.ThreadLocalUtil;
 import org.springframework.stereotype.Service;
@@ -17,10 +18,12 @@ public class RepairRequestServiceImpl implements RepairRequestService {
     private final RepairRequestMapper repairRequestMapper;
     private final UserMapper userMapper;
     private final TenantsMapper tenantsMapper;
-    RepairRequestServiceImpl(RepairRequestMapper repairRequestMapper,UserMapper userMapper,TenantsMapper tenantsMapper){
+    private final NotificationService notificationService;
+    RepairRequestServiceImpl(RepairRequestMapper repairRequestMapper,UserMapper userMapper,TenantsMapper tenantsMapper,NotificationService notificationService){
         this.repairRequestMapper = repairRequestMapper;
         this.userMapper = userMapper;
         this.tenantsMapper = tenantsMapper;
+        this.notificationService = notificationService;
     }
     @Override
     public RepairRequest createRepairRequest(String description, String available) {
@@ -38,6 +41,7 @@ public class RepairRequestServiceImpl implements RepairRequestService {
         repairRequest.setCreatedAt(LocalDateTime.now());
         repairRequest.setUpdatedAt(LocalDateTime.now());
         repairRequestMapper.create(repairRequest);
+        notificationService.notifyOwners("New repair request submitted!");
         return repairRequest;
     }
 
