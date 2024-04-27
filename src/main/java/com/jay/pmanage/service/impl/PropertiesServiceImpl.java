@@ -1,6 +1,7 @@
 package com.jay.pmanage.service.impl;
 
 import com.jay.pmanage.mapper.PropertiesMapper;
+import com.jay.pmanage.mapper.UserMapper;
 import com.jay.pmanage.pojo.Properties;
 import com.jay.pmanage.service.PropertiesService;
 import com.jay.pmanage.util.ThreadLocalUtil;
@@ -11,8 +12,10 @@ import java.util.Map;
 @Service
 public class PropertiesServiceImpl implements PropertiesService {
     private final PropertiesMapper propertiesMapper;
-    PropertiesServiceImpl(PropertiesMapper propertiesMapper){
+    private final UserMapper userMapper;
+    PropertiesServiceImpl(PropertiesMapper propertiesMapper,UserMapper userMapper){
         this.propertiesMapper = propertiesMapper;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -42,4 +45,5 @@ public class PropertiesServiceImpl implements PropertiesService {
     public Properties findPropertyById(Integer id) {
         return propertiesMapper.findPropertyById(id);
     }
+
 }

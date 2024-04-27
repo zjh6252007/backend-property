@@ -1,5 +1,6 @@
 package com.jay.pmanage.service;
 
+import com.jay.pmanage.pojo.Properties;
 import com.jay.pmanage.pojo.Tenants;
 
 import java.util.List;

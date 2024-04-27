@@ -1,5 +1,6 @@
 package com.jay.pmanage.service;
 
+import com.jay.pmanage.pojo.Properties;
 import com.jay.pmanage.pojo.Result;
 import com.jay.pmanage.pojo.Tenants;
 import com.jay.pmanage.pojo.User;
@@ -15,4 +16,5 @@ public interface UserService {
     Boolean verifyEmail(String token);
     void resendVerificationEmail() throws Exception;
     void sendInvitationEmail(Integer tenantsId) throws Exception;
+    Integer getPropertyIdByTenantId();
 }

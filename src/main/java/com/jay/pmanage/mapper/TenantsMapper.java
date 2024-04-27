@@ -15,7 +15,7 @@ public interface TenantsMapper {
     Tenants findUserByName(String username);
     @Select("SELECT * FROM tenants WHERE username=#{username}")
     Tenants findTenantsAccount(String username);
-    @Insert("INSERT INTO tenants(firstName,lastName,email,phone,address,create_user) VALUES(#{firstName},#{lastName},#{email},#{phone},#{address},#{createUser})")
+    @Insert("INSERT INTO tenants(firstName,lastName,email,phone,address,create_user,property_id) VALUES(#{firstName},#{lastName},#{email},#{phone},#{address},#{createUser},#{propertyId})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void add(Tenants tenants);
 
@@ -47,4 +47,5 @@ public interface TenantsMapper {
 
     @Select("SELECT property_id FROM tenants WHERE id=#{id}")
     Integer getPropertyById(Integer id);
+
 }

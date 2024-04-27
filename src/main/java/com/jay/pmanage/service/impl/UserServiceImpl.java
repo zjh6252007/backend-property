@@ -2,6 +2,7 @@ package com.jay.pmanage.service.impl;
 
 import com.jay.pmanage.mapper.TenantsMapper;
 import com.jay.pmanage.mapper.UserMapper;
+import com.jay.pmanage.pojo.Properties;
 import com.jay.pmanage.pojo.Tenants;
 import com.jay.pmanage.pojo.User;
 import com.jay.pmanage.service.EmailService;
@@ -161,5 +162,13 @@ public class UserServiceImpl implements UserService {
         String link = "localhost:3000/register/tenant?invitation_token=" + token;
         emailService.sendInviteEmail(email,"Register your account at: "+address,link);
         ops.set("invite:"+email,"sent",5,TimeUnit.MINUTES);
+    }
+
+    @Override
+    public Integer getPropertyIdByTenantId() {
+        Map<String,Object> propertyMap = ThreadLocalUtil.get();
+        Integer userId = (Integer) propertyMap.get("id");
+        Integer tenantId = userMapper.getTenantId(userId);
+        return tenantsMapper.getPropertyById(tenantId);
     }
 }

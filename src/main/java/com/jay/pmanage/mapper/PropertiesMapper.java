@@ -30,4 +30,5 @@ public interface PropertiesMapper {
             "WHERE id=#{id}" +
             "</script>")
     void modify(@Param("id") Integer id, @Param("properties")Properties properties);
+
 }
