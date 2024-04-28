@@ -6,6 +6,7 @@ import com.jay.pmanage.service.ContractService;
 import com.jay.pmanage.util.ThreadLocalUtil;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -23,5 +24,10 @@ public class ContractServiceImpl implements ContractService {
         Integer userid = (Integer) userMap.get("id");
         contract.setCreateUser(userid);
         contractMapper.insertContract(contract);
+    }
+
+    @Override
+    public List<Contract> getContractByPropertyId(Integer id) {
+        return contractMapper.findContractByPropertyId(id);
     }
 }

@@ -6,7 +6,7 @@ import java.net.URL;
 import java.util.List;
 
 public interface S3Service {
-    Boolean uploadFile(String userId,MultipartFile file);
+    Boolean uploadFile(String userId,String propertyAddress,MultipartFile file);
 
     List<String> getFileList(String userId);
 

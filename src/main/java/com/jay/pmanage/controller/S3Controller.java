@@ -1,9 +1,12 @@
 package com.jay.pmanage.controller;
 
+import com.jay.pmanage.mapper.PropertiesMapper;
 import com.jay.pmanage.pojo.Contract;
 import com.jay.pmanage.pojo.ContractDto;
+import com.jay.pmanage.pojo.Properties;
 import com.jay.pmanage.pojo.Result;
 import com.jay.pmanage.service.ContractService;
+import com.jay.pmanage.service.PropertiesService;
 import com.jay.pmanage.service.S3Service;
 import com.jay.pmanage.util.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,20 +24,26 @@ public class S3Controller {
 
     private final S3Service s3Service;
     private final ContractService contractService;
+    private final PropertiesService propertiesService;
     @Autowired
-    public S3Controller(S3Service s3Service,ContractService contractService) {
+    public S3Controller(S3Service s3Service,ContractService contractService,PropertiesService propertiesService) {
         this.s3Service = s3Service;
         this.contractService = contractService;
+        this.propertiesService = propertiesService;
     }
 
     @PostMapping("/upload")
     public Result<Void> uploadFile(@ModelAttribute ContractDto contractDto) {
         Map<String,Object> user = ThreadLocalUtil.get();
         String userID = user.get("id").toString();
-
-        if (s3Service.uploadFile(userID, contractDto.getFile())) {
+        Properties property = propertiesService.findPropertyById(contractDto.getPropertyId());
+        String propertyAddress = "";
+        if(property != null) {
+            propertyAddress = "/" + property.getAddress();
+        }
+        if (s3Service.uploadFile(userID, propertyAddress,contractDto.getFile())) {
             Contract contract = new Contract();
-          //  contract.setName(contractDto.getName());
+            contract.setName(contractDto.getName());
             contract.setStartTime(contractDto.getStartTime());
             contract.setEndTime(contractDto.getEndTime());
             contract.setPropertyId(contractDto.getPropertyId());

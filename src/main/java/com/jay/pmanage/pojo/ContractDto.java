@@ -10,7 +10,7 @@ import java.time.LocalDate;
 public class ContractDto {
     private MultipartFile file;
 
-    //private String name;
+    private String name;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startTime;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
