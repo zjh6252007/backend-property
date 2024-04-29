@@ -10,5 +10,6 @@ public interface PropertiesService {
     void deleteProperties(Integer id);
     void modifyProperties(Integer id, Properties properties);
     Properties findPropertyById(Integer id);
+    Properties findTenantProperty();
 
 }

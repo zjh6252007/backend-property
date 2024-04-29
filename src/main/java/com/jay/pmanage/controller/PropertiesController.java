@@ -30,6 +30,11 @@ public class PropertiesController {
         return Result.success(propertiesList);
     }
 
+    @GetMapping("/getMyHome")
+    public Result<Properties> getMyHome(){
+        return Result.success(propertiesService.findTenantProperty());
+    }
+
     @GetMapping("/{id}")
     public Result<Properties> getPropertyInfo(@PathVariable Integer id){
         Properties property = propertiesService.findPropertyById(id);

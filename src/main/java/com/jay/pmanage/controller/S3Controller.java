@@ -36,12 +36,13 @@ public class S3Controller {
     public Result<Void> uploadFile(@ModelAttribute ContractDto contractDto) {
         Map<String,Object> user = ThreadLocalUtil.get();
         String userID = user.get("id").toString();
+        /*
         Properties property = propertiesService.findPropertyById(contractDto.getPropertyId());
         String propertyAddress = "";
         if(property != null) {
             propertyAddress = "/" + property.getAddress();
-        }
-        if (s3Service.uploadFile(userID, propertyAddress,contractDto.getFile())) {
+        }*/
+        if (s3Service.uploadFile(userID,contractDto.getFile())) {
             Contract contract = new Contract();
             contract.setName(contractDto.getName());
             contract.setStartTime(contractDto.getStartTime());

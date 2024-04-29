@@ -25,8 +25,8 @@ public class S3ServiceImpl implements S3Service {
     }
 
     @Override
-    public Boolean uploadFile(String userId,String propertyAddress,MultipartFile file) {
-        String fileName = userId + propertyAddress + "/" + file.getOriginalFilename();
+    public Boolean uploadFile(String userId,MultipartFile file) {
+        String fileName = userId + "/" + file.getOriginalFilename();
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentLength(file.getSize());
         metadata.setContentType(file.getContentType());
